@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KarirIn — Pusat Belajar & Karier Indonesia</title>
+  <meta name="description" content="Platform agregator terbesar untuk pendidikan, skill, sertifikasi, dan karier di Indonesia. Temukan kursus, bootcamp, loker, dan roadmap karier terbaik." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #FAFAF8;
+      --bg2: #F3F2EE;
+      --surface: #FFFFFF;
+      --border: #E8E6E0;
+      --text: #1A1916;
+      --text2: #6B6860;
+      --text3: #9B9890;
+      --accent: #E8521A;
+      --accent2: #2D6BE4;
+      --accent3: #16A085;
+      --warm: #F4EFE8;
+      --radius: 14px;
+      --radius-sm: 8px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    [data-theme="dark"] {
+      --bg: #111110;
+      --bg2: #1A1916;
+      --surface: #222220;
+      --border: #2E2D2A;
+      --text: #F0EDE8;
+      --text2: #9B9890;
+      --text3: #6B6860;
+      --warm: #1E1C18;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
+      --shadow-md: 0 4px 24px rgba(0,0,0,0.4);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+    }
+
+    /* NAVBAR */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(250,250,248,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      transition: background 0.3s;
+    }
+    [data-theme="dark"] nav { background: rgba(17,17,16,0.92); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; height: 60px; gap: 32px;
+    }
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 22px; font-weight: 700;
+      color: var(--text); text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+      flex-shrink: 0;
+    }
+    .logo-dot { color: var(--accent); }
+    .nav-links {
+      display: flex; gap: 4px; list-style: none; flex: 1;
+    }
+    .nav-links a {
+      padding: 6px 12px; border-radius: var(--radius-sm);
+      color: var(--text2); text-decoration: none;
+      font-size: 14px; font-weight: 500;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover { background: var(--bg2); color: var(--text); }
+    .nav-right { display: flex; align-items: center; gap: 8px; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; text-decoration: none; font-family: inherit; }
+    .btn-ghost { background: transparent; color: var(--text2); }
+    .btn-ghost:hover { background: var(--bg2); color: var(--text); }
+    .btn-primary { background: var(--text); color: var(--bg); }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-accent { background: var(--accent); color: #fff; }
+    .btn-accent:hover { opacity: 0.9; transform: translateY(-1px); }
+    .theme-toggle {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--bg2); border: 1px solid var(--border);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 16px; transition: all 0.2s;
+    }
+    .theme-toggle:hover { background: var(--border); }
+    .hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; padding: 8px; }
+    .hamburger span { width: 20px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
+
+    /* HERO */
+    .hero {
+      max-width: 1200px; margin: 0 auto;
+      padding: 80px 24px 64px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--warm); border: 1px solid var(--border);
+      padding: 6px 12px; border-radius: 100px;
+      font-size: 12px; font-weight: 600; color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .hero-badge::before { content: '●'; font-size: 8px; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: 1.1; font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub {
+      font-size: 17px; color: var(--text2); line-height: 1.7;
+      margin-bottom: 32px; max-width: 480px;
+    }
+    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+    .hero-stats {
+      display: flex; gap: 32px;
+      padding-top: 32px; border-top: 1px solid var(--border);
+    }
+    .stat-item { display: flex; flex-direction: column; gap: 2px; }
+    .stat-num { font-size: 22px; font-weight: 800; font-family: 'Fraunces', serif; }
+    .stat-label { font-size: 12px; color: var(--text3); font-weight: 500; }
+
+    /* SEARCH SECTION */
+    .search-section {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 24px;
+    }
+    .search-inner { max-width: 800px; margin: 0 auto; }
+    .search-label { font-size: 13px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .search-box {
+      display: flex; gap: 12px;
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 8px 8px 8px 20px;
+      box-shadow: var(--shadow-md);
+      transition: border-color 0.2s;
+    }
+    .search-box:focus-within { border-color: var(--text); }
+    .search-box input {
+      flex: 1; border: none; background: transparent;
+      font-family: inherit; font-size: 16px; color: var(--text);
+      outline: none;
+    }
+    .search-box input::placeholder { color: var(--text3); }
+    .search-filters {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px;
+    }
+    .filter-chip {
+      padding: 5px 12px; border-radius: 100px;
+      background: var(--surface); border: 1px solid var(--border);
+      font-size: 13px; font-weight: 500; color: var(--text2);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .filter-chip:hover, .filter-chip.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+    /* PLATFORM GRID */
+    section { padding: 64px 24px; max-width: 1200px; margin: 0 auto; }
+    .section-header { margin-bottom: 40px; }
+    .section-tag {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 700; line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+    .section-sub { color: var(--text2); font-size: 16px; margin-top: 8px; max-width: 520px; }
+
+    .platform-tabs {
+      display: flex; gap: 4px; margin-bottom: 32px;
+      background: var(--bg2); padding: 4px; border-radius: var(--radius);
+      width: fit-content; flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 7px 16px; border-radius: 10px; border: none;
+      background: transparent; color: var(--text2);
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      font-family: inherit; transition: all 0.2s;
+    }
+    .tab-btn.active { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+
+    .platform-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;
+    }
+    .platform-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+      cursor: pointer; transition: all 0.25s;
+      text-decoration: none; color: var(--text);
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .platform-card:hover {
+      border-color: var(--text);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .platform-logo {
+      width: 44px; height: 44px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 800;
+    }
+    .platform-name { font-size: 15px; font-weight: 700; }
+    .platform-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
+    .platform-tag {
+      display: inline-block; padding: 3px 8px; border-radius: 100px;
+      font-size: 11px; font-weight: 600; margin-top: auto;
+    }
+    .tag-free { background: #E8F8F0; color: #16A085; }
+    .tag-paid { background: #FEF3E8; color: #E8521A; }
+    .tag-freemium { background: #EBF2FD; color: #2D6BE4; }
+    [data-theme="dark"] .tag-free { background: #0D2E22; color: #2ECC8A; }
+    [data-theme="dark"] .tag-paid { background: #2E1A0D; color: #F07A48; }
+    [data-theme="dark"] .tag-freemium { background: #0D1E3A; color: #5B8EF5; }
+
+    /* ROADMAP */
+    .roadmap-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .roadmap-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px;
+    }
+    .roadmap-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+      cursor: pointer; transition: all 0.25s; position: relative; overflow: hidden;
+    }
+    .roadmap-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .roadmap-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .roadmap-icon { font-size: 32px; margin-bottom: 12px; }
+    .roadmap-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .roadmap-meta { font-size: 13px; color: var(--text2); margin-bottom: 16px; }
+    .roadmap-skills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .skill-chip {
+      padding: 3px 8px; border-radius: 4px;
+      background: var(--bg2); border: 1px solid var(--border);
+      font-size: 11px; font-weight: 500; color: var(--text2);
+    }
+    .salary-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      margin-top: 16px; font-size: 13px; font-weight: 700;
+      color: var(--accent3);
+    }
+
+    /* AI RECOMMENDATION */
+    .ai-section {
+      background: var(--text);
+      color: var(--bg);
+      border-radius: 24px;
+      padding: 56px 48px;
+      margin: 0 24px 64px;
+      max-width: 1152px;
+      margin-left: auto; margin-right: auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
+    }
+    .ai-title { font-family: 'Fraunces', serif; font-size: clamp(28px, 3.5vw, 44px); line-height: 1.2; font-weight: 700; margin-bottom: 16px; }
+    .ai-sub { font-size: 16px; opacity: 0.7; line-height: 1.7; margin-bottom: 32px; }
+    .ai-input-area {
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius); padding: 16px 20px;
+      margin-bottom: 12px;
+    }
+    .ai-input-area textarea {
+      width: 100%; background: transparent; border: none; outline: none;
+      color: inherit; font-family: inherit; font-size: 15px; resize: none;
+      height: 80px; opacity: 0.9;
+    }
+    .ai-input-area textarea::placeholder { opacity: 0.5; }
+    .btn-white { background: #fff; color: var(--text) !important; }
+    .ai-output {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius); padding: 24px;
+    }
+    .ai-output-title { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; opacity: 0.6; text-transform: uppercase; margin-bottom: 16px; }
+    .ai-rec-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .ai-rec-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .ai-rec-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .ai-rec-text { font-size: 14px; font-weight: 500; }
+    .ai-rec-sub { font-size: 12px; opacity: 0.6; }
+
+    /* JOB PORTAL */
+    .job-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+    .job-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+      transition: all 0.25s; cursor: pointer;
+    }
+    .job-card:hover { border-color: var(--text); box-shadow: var(--shadow-md); }
+    .job-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .company-logo {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: var(--bg2); display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .job-new { font-size: 11px; font-weight: 700; color: var(--accent3); }
+    .job-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .job-company { font-size: 14px; color: var(--text2); margin-bottom: 16px; }
+    .job-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .job-tag {
+      padding: 4px 10px; border-radius: 4px;
+      background: var(--bg2); font-size: 12px; font-weight: 500; color: var(--text2);
+    }
+    .job-salary { font-size: 15px; font-weight: 700; color: var(--accent3); margin-top: 16px; }
+    .job-source { font-size: 12px; color: var(--text3); margin-top: 8px; }
+
+    /* COMMUNITY */
+    .community-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .community-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+      transition: all 0.25s;
+    }
+    .community-card:hover { border-color: var(--text); }
+    .community-icon { font-size: 28px; margin-bottom: 12px; }
+    .community-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .community-desc { font-size: 13px; color: var(--text2); margin-bottom: 16px; line-height: 1.6; }
+    .community-members { font-size: 12px; font-weight: 600; color: var(--text3); }
+
+    /* SCHOLARSHIP */
+    .scholarship-list { display: flex; flex-direction: column; gap: 16px; }
+    .scholarship-item {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px 24px;
+      display: flex; align-items: center; gap: 20px;
+      transition: all 0.25s;
+    }
+    .scholarship-item:hover { border-color: var(--text); box-shadow: var(--shadow); }
+    .scholarship-icon { font-size: 32px; flex-shrink: 0; }
+    .scholarship-content { flex: 1; }
+    .scholarship-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .scholarship-detail { font-size: 13px; color: var(--text2); }
+    .scholarship-deadline { font-size: 12px; font-weight: 700; color: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      background: var(--text);
+      color: var(--bg);
+      padding: 56px 24px 32px;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 48px;
+      padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-brand { }
+    .footer-logo { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700; margin-bottom: 12px; }
+    .footer-tagline { font-size: 14px; opacity: 0.6; line-height: 1.7; max-width: 260px; }
+    .footer-col-title { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; margin-bottom: 16px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { color: inherit; text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity 0.2s; }
+    .footer-links a:hover { opacity: 1; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .footer-copy { font-size: 13px; opacity: 0.5; }
+    .footer-socials { display: flex; gap: 12px; }
+    .social-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; text-decoration: none; color: inherit;
+      transition: background 0.2s;
+    }
+    .social-btn:hover { background: rgba(255,255,255,0.2); }
+
+    /* HERO VISUAL */
+    .hero-visual {
+      position: relative; aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-card-stack { position: relative; width: 100%; height: 340px; }
+    .hcard {
+      position: absolute; border-radius: var(--radius);
+      background: var(--surface); border: 1px solid var(--border);
+      box-shadow: var(--shadow-md); padding: 16px 20px;
+      transition: all 0.3s;
+    }
+    .hcard-1 { top: 0; left: 0; right: 40px; }
+    .hcard-2 { top: 80px; right: 0; left: 40px; }
+    .hcard-3 { bottom: 0; left: 20px; right: 20px; }
+    .hcard-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 10px; }
+    .hcard-content { display: flex; align-items: center; gap: 12px; }
+    .hcard-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .hcard-text .t1 { font-size: 14px; font-weight: 700; }
+    .hcard-text .t2 { font-size: 12px; color: var(--text2); }
+    .progress-bar { height: 4px; background: var(--bg2); border-radius: 2px; margin-top: 10px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent3)); border-radius: 2px; }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s, transform 0.6s; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: var(--bg); padding: 80px 24px 32px;
+      flex-direction: column; gap: 8px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-close {
+      position: absolute; top: 16px; right: 16px;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--bg2); border: none; cursor: pointer; font-size: 18px;
+    }
+    .mobile-menu a { padding: 14px 16px; border-radius: var(--radius-sm); font-size: 16px; font-weight: 600; color: var(--text); text-decoration: none; transition: background 0.2s; }
+    .mobile-menu a:hover { background: var(--bg2); }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero { grid-template-columns: 1fr; gap: 48px; padding: 48px 20px; }
+      .hero-visual { display: none; }
+      .ai-section { grid-template-columns: 1fr; gap: 32px; padding: 36px 24px; margin: 0 16px 48px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .community-grid { grid-template-columns: 1fr; }
+      .nav-right .btn-ghost { display: none; }
+    }
+    @media (max-width: 600px) {
+      .hero-stats { flex-wrap: wrap; gap: 20px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .job-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">KarirIn<span class="logo-dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="#platform">Platform</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="#loker">Loker</a></li>
+      <li><a href="#komunitas">Komunitas</a></li>
+      <li><a href="#beasiswa">Beasiswa</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Ganti tema">🌙</button>
+      <a href="login.html" class="btn btn-ghost">Masuk</a>
+      <a href="register.html" class="btn btn-primary">Daftar Gratis</a>
+    </div>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()">✕</button>
+  <a href="#platform" onclick="toggleMenu()">Platform</a>
+  <a href="#roadmap" onclick="toggleMenu()">Roadmap Karier</a>
+  <a href="#loker" onclick="toggleMenu()">Portal Loker</a>
+  <a href="#komunitas" onclick="toggleMenu()">Komunitas</a>
+  <a href="#beasiswa" onclick="toggleMenu()">Beasiswa</a>
+  <a href="login.html">Masuk</a>
+  <a href="register.html">Daftar Gratis</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content reveal">
+    <div class="hero-badge">Platform Terbesar Edukasi & Karier Indonesia</div>
+    <h1>Satu Tempat untuk <em>Semua</em> Perjalanan Kariermu</h1>
+    <p class="hero-sub">Temukan kursus, sertifikasi, bootcamp, lowongan kerja, dan roadmap karier dari ratusan platform terpercaya — tanpa perlu pindah-pindah aplikasi lagi.</p>
+    <div class="hero-cta">
+      <a href="#search" class="btn btn-primary" style="padding:12px 24px;font-size:15px;">🔍 Mulai Eksplorasi</a>
+      <a href="#roadmap" class="btn btn-ghost" style="padding:12px 24px;font-size:15px;border:1.5px solid var(--border);">Lihat Roadmap Karier</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">50+</span>
+        <span class="stat-label">Platform Terhubung</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">10rb+</span>
+        <span class="stat-label">Kursus & Bootcamp</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">200rb+</span>
+        <span class="stat-label">Pengguna Aktif</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual reveal">
+    <div class="hero-card-stack">
+      <div class="hcard hcard-1">
+        <div class="hcard-label">Rekomendasi AI untukmu</div>
+        <div class="hcard-content">
+          <div class="hcard-icon" style="background:#EBF2FD">📚</div>
+          <div class="hcard-text">
+            <div class="t1">React.js untuk Pemula</div>
+            <div class="t2">Dicoding · Gratis · Bersertifikat</div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:78%"></div></div>
+      </div>
+      <div class="hcard hcard-2">
+        <div class="hcard-label">Loker Relevan</div>
+        <div class="hcard-content">
+          <div class="hcard-icon" style="background:#E8F8F0">💼</div>
+          <div class="hcard-text">
+            <div class="t1">Frontend Developer</div>
+            <div class="t2">Tokopedia · Remote · Rp 8–15 juta</div>
+          </div>
+        </div>
+      </div>
+      <div class="hcard hcard-3">
+        <div class="hcard-label">Progress Skill Tracker</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span style="font-weight:600">JavaScript</span><span style="color:var(--text3)">82%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:82%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span style="font-weight:600">UI/UX Design</span><span style="color:var(--text3)">55%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:55%;background:linear-gradient(90deg,var(--accent),#f5a623)"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-section" id="search">
+  <div class="search-inner">
+    <div class="search-label">Cari apa yang kamu butuhkan</div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Cari kursus, bootcamp, universitas, loker, sertifikasi..." />
+      <button class="btn btn-primary" onclick="doSearch()">Cari Sekarang</button>
+    </div>
+    <div class="search-filters" id="filters">
+      <span class="filter-chip active" onclick="setFilter(this,'semua')">Semua</span>
+      <span class="filter-chip" onclick="setFilter(this,'kursus')">Kursus Online</span>
+      <span class="filter-chip" onclick="setFilter(this,'bootcamp')">Bootcamp</span>
+      <span class="filter-chip" onclick="setFilter(this,'loker')">Lowongan Kerja</span>
+      <span class="filter-chip" onclick="setFilter(this,'sertifikasi')">Sertifikasi</span>
+      <span class="filter-chip" onclick="setFilter(this,'universitas')">Universitas</span>
+      <span class="filter-chip" onclick="setFilter(this,'beasiswa')">Beasiswa</span>
+      <span class="filter-chip" onclick="setFilter(this,'gratis')">Gratis</span>
+      <span class="filter-chip" onclick="setFilter(this,'remote')">Remote</span>
+    </div>
+  </div>
+</div>
+
+<!-- PLATFORMS -->
+<section id="platform">
+  <div class="section-header reveal">
+    <div class="section-tag">Platform Terkurasi</div>
+    <h2 class="section-title">Semua Platform Terpercaya,<br>Satu Dashboard</h2>
+    <p class="section-sub">Kami mengkurasi dan menghubungkan kamu ke platform belajar dan karier terbaik Indonesia & dunia.</p>
+  </div>
+  <div class="platform-tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'belajar')">Belajar Online</button>
+    <button class="tab-btn" onclick="switchTab(this,'bootcamp')">Bootcamp</button>
+    <button class="tab-btn" onclick="switchTab(this,'loker-platform')">Portal Karier</button>
+    <button class="tab-btn" onclick="switchTab(this,'sertifikasi-platform')">Sertifikasi</button>
+    <button class="tab-btn" onclick="switchTab(this,'kampus')">Kampus Online</button>
+  </div>
+  <div class="platform-grid reveal" id="platformGrid">
+    <!-- injected by JS -->
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<div class="roadmap-section">
+  <section id="roadmap">
+    <div class="section-header reveal">
+      <div class="section-tag">Roadmap Karier</div>
+      <h2 class="section-title">Langkah Jelas Menuju<br>Karier Impianmu</h2>
+      <p class="section-sub">Dari skill wajib hingga estimasi gaji — semua tersedia dalam satu peta perjalanan.</p>
+    </div>
+    <div class="roadmap-grid reveal" id="roadmapGrid">
+      <!-- injected by JS -->
+    </div>
+  </section>
+</div>
+
+<!-- AI SECTION -->
+<div class="ai-section reveal">
+  <div class="ai-left">
+    <h2 class="ai-title">Rekomendasi Cerdas,<br>Khusus Untukmu</h2>
+    <p class="ai-sub">Ceritakan tujuan kariermu atau skill yang ingin dikuasai. AI kami akan memetakan jalur terbaik, kursus yang tepat, dan loker relevan untuk perjalananmu.</p>
+    <div class="ai-input-area">
+      <textarea placeholder="Contoh: Saya fresh graduate teknik informatika, ingin jadi Data Scientist dalam 1 tahun..." id="aiInput"></textarea>
+    </div>
+    <button class="btn btn-white" onclick="getAIRec()">✨ Dapatkan Rekomendasi</button>
+  </div>
+  <div class="ai-right">
+    <div class="ai-output" id="aiOutput">
+      <div class="ai-output-title">Rekomendasi Terakhir</div>
+      <div class="ai-rec-item">
+        <div class="ai-rec-num">1</div>
+        <div>
+          <div class="ai-rec-text">Pelajari Python & Statistik Dasar</div>
+          <div class="ai-rec-sub">Dicoding · Belajar Analisis Data — 6 minggu</div>
+        </div>
+      </div>
+      <div class="ai-rec-item">
+        <div class="ai-rec-num">2</div>
+        <div>
+          <div class="ai-rec-text">Ambil Sertifikasi Google Data Analytics</div>
+          <div class="ai-rec-sub">Coursera · Professional Certificate · ~6 bulan</div>
+        </div>
+      </div>
+      <div class="ai-rec-item">
+        <div class="ai-rec-num">3</div>
+        <div>
+          <div class="ai-rec-text">Bangun portfolio proyek analitik</div>
+          <div class="ai-rec-sub">Kaggle Competitions + GitHub</div>
+        </div>
+      </div>
+      <div class="ai-rec-item">
+        <div class="ai-rec-num">4</div>
+        <div>
+          <div class="ai-rec-text">Lamar posisi Junior Data Analyst</div>
+          <div class="ai-rec-sub">Glints · 320+ lowongan tersedia sekarang</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JOB PORTAL -->
+<section id="loker">
+  <div class="section-header reveal">
+    <div class="section-tag">Portal Loker</div>
+    <h2 class="section-title">Ribuan Lowongan<br>dari Perusahaan Terbaik</h2>
+    <p class="section-sub">Dikurasi dari LinkedIn, Glints, Jobstreet, Kalibrr, dan Indeed — semua dalam satu tempat.</p>
+  </div>
+  <div class="job-grid reveal" id="jobGrid"></div>
+  <div style="text-align:center;margin-top:40px">
+    <a href="loker.html" class="btn btn-primary" style="padding:12px 28px">Lihat Semua Lowongan →</a>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section id="komunitas" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);max-width:100%;padding:64px 24px">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="section-header reveal">
+      <div class="section-tag">Komunitas</div>
+      <h2 class="section-title">Belajar Lebih Seru<br>Bersama Komunitas</h2>
+    </div>
+    <div class="community-grid reveal" id="communityGrid"></div>
+  </div>
+</section>
+
+<!-- SCHOLARSHIP -->
+<section id="beasiswa">
+  <div class="section-header reveal">
+    <div class="section-tag">Beasiswa & Magang</div>
+    <h2 class="section-title">Jangan Sampai Terlewat</h2>
+    <p class="section-sub">Program beasiswa, magang, dan funding yang sedang buka pendaftaran.</p>
+  </div>
+  <div class="scholarship-list reveal" id="scholarshipList"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">KarirIn<span style="color:var(--accent)">.</span></div>
+        <p class="footer-tagline">Pusat navigasi pendidikan dan karier terlengkap untuk generasi Indonesia yang siap bersaing.</p>
+        <div style="margin-top:24px;display:flex;gap:8px;flex-wrap:wrap">
+          <span style="padding:4px 10px;border-radius:100px;border:1px solid rgba(255,255,255,0.2);font-size:12px;opacity:0.7">🇮🇩 Made in Indonesia</span>
+          <span style="padding:4px 10px;border-radius:100px;border:1px solid rgba(255,255,255,0.2);font-size:12px;opacity:0.7">✅ Verified Platforms</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <ul class="footer-links">
+          <li><a href="#">Kursus Online</a></li>
+          <li><a href="#">Bootcamp</a></li>
+          <li><a href="#">Universitas</a></li>
+          <li><a href="#">Sertifikasi</a></li>
+          <li><a href="#">Webinar</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Karier</div>
+        <ul class="footer-links">
+          <li><a href="#">Portal Loker</a></li>
+          <li><a href="#">Roadmap Karier</a></li>
+          <li><a href="#">Skill Tracker</a></li>
+          <li><a href="#">Program Magang</a></li>
+          <li><a href="#">Beasiswa</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Perusahaan</div>
+        <ul class="footer-links">
+          <li><a href="#">Tentang Kami</a></li>
+          <li><a href="#">Kemitraan</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Press Kit</a></li>
+          <li><a href="#">Hubungi Kami</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 KarirIn. Hak cipta dilindungi undang-undang.</span>
+      <div class="footer-socials">
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">ig</a>
+        <a href="#" class="social-btn">yt</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────
+const platforms = {
+  belajar: [
+    { name:'Dicoding', desc:'Platform belajar coding terfokus untuk developer Indonesia', tag:'freemium', color:'#EBF2FD', emoji:'💻', url:'https://dicoding.com' },
+    { name:'Coursera', desc:'Kursus dari 300+ universitas dan perusahaan top dunia', tag:'freemium', color:'#E8F8F0', emoji:'🎓', url:'https://coursera.org' },
+    { name:'Udemy', desc:'Lebih dari 200.000 kursus berbagai bidang ilmu', tag:'paid', color:'#FEF3E8', emoji:'📘', url:'https://udemy.com' },
+    { name:'Ruangguru', desc:'Platform belajar terlengkap untuk pelajar Indonesia', tag:'freemium', color:'#FDE8F3', emoji:'🧠', url:'https://ruangguru.com' },
+    { name:'Skill Academy', desc:'Kursus online dengan mentor praktisi berpengalaman', tag:'paid', color:'#F0EDF8', emoji:'🏅', url:'https://skillacademy.com' },
+    { name:'LinkedIn Learning', desc:'Kursus profesional langsung dari platform karier #1', tag:'paid', color:'#E8F0FD', emoji:'🔵', url:'https://linkedin.com/learning' },
+    { name:'edX', desc:'Kursus dari MIT, Harvard, dan universitas bergengsi dunia', tag:'freemium', color:'#E8F8F0', emoji:'🏛️', url:'https://edx.org' },
+    { name:'Kelas.com', desc:'Platform kursus kreatif dan bisnis untuk profesional muda', tag:'paid', color:'#FEF3E8', emoji:'🎨', url:'https://kelas.com' },
+  ],
+  bootcamp: [
+    { name:'RevoU', desc:'Bootcamp intensif 4 bulan dengan jaminan kerja', tag:'paid', color:'#E8F8F0', emoji:'🚀', url:'https://revou.co' },
+    { name:'Harisenin.com', desc:'Bootcamp tech & design dengan mentor industri', tag:'paid', color:'#FDE8F3', emoji:'🌟', url:'https://harisenin.com' },
+    { name:'Binar Academy', desc:'Bootcamp full-stack dengan proyek nyata perusahaan', tag:'paid', color:'#F0EDF8', emoji:'⭐', url:'https://binar.co.id' },
+    { name:'Purwadhika', desc:'Sekolah coding & digital bisnis terpercaya Indonesia', tag:'paid', color:'#FEF3E8', emoji:'🎯', url:'https://purwadhika.com' },
+    { name:'Hacktiv8', desc:'Coding bootcamp intensif dengan track rekrutmen', tag:'paid', color:'#EBF2FD', emoji:'⚡', url:'https://hacktiv8.com' },
+    { name:'Sanbercode', desc:'Kursus teknologi dengan program beasiswa tersedia', tag:'freemium', color:'#E8F8F0', emoji:'💡', url:'https://sanbercode.com' },
+  ],
+  'loker-platform': [
+    { name:'LinkedIn', desc:'Jaringan profesional & loker terbesar di dunia', tag:'freemium', color:'#EBF2FD', emoji:'💼', url:'https://linkedin.com' },
+    { name:'Glints', desc:'Platform karier terfokus untuk talenta Asia Tenggara', tag:'free', color:'#E8F8F0', emoji:'✨', url:'https://glints.com' },
+    { name:'Jobstreet', desc:'Platform loker #1 untuk Asia Tenggara', tag:'free', color:'#FEF3E8', emoji:'🔍', url:'https://jobstreet.co.id' },
+    { name:'Kalibrr', desc:'Platform kerja dengan sistem matching berbasis skill', tag:'free', color:'#FDE8F3', emoji:'🎯', url:'https://kalibrr.com' },
+    { name:'Indeed', desc:'Mesin pencari loker terbesar di dunia', tag:'free', color:'#F0EDF8', emoji:'🌐', url:'https://indeed.com' },
+    { name:'Tech in Asia', desc:'Loker khusus startup dan perusahaan teknologi', tag:'free', color:'#E8F8F0', emoji:'🏢', url:'https://techinasia.com' },
+  ],
+  'sertifikasi-platform': [
+    { name:'Google', desc:'Sertifikasi profesional di bidang IT, data, dan marketing', tag:'paid', color:'#EBF2FD', emoji:'🔵', url:'https://grow.google' },
+    { name:'Microsoft', desc:'Sertifikasi Azure, Office, dan teknologi Microsoft', tag:'paid', color:'#E8F8F0', emoji:'🪟', url:'https://learn.microsoft.com' },
+    { name:'AWS', desc:'Sertifikasi cloud computing paling dicari di industri', tag:'paid', color:'#FEF3E8', emoji:'☁️', url:'https://aws.amazon.com/certification' },
+    { name:'PMI', desc:'Sertifikasi manajemen proyek PMP & PMI-ACP', tag:'paid', color:'#FDE8F3', emoji:'📋', url:'https://pmi.org' },
+    { name:'BNSP', desc:'Sertifikasi kompetensi nasional resmi Indonesia', tag:'paid', color:'#F0EDF8', emoji:'🇮🇩', url:'https://bnsp.go.id' },
+    { name:'Cisco', desc:'Sertifikasi jaringan dan keamanan siber CCNA/CCNP', tag:'paid', color:'#E8F8F0', emoji:'🌐', url:'https://cisco.com/certifications' },
+  ],
+  kampus: [
+    { name:'Universitas Terbuka', desc:'Perguruan tinggi negeri jarak jauh terbesar Indonesia', tag:'paid', color:'#E8F8F0', emoji:'🏛️', url:'https://ut.ac.id' },
+    { name:'Binus Online', desc:'S1/S2 online dari universitas swasta terkemuka', tag:'paid', color:'#EBF2FD', emoji:'📚', url:'https://onlinelearning.binus.ac.id' },
+    { name:'UGM Online', desc:'Program sarjana & magister online Universitas Gadjah Mada', tag:'paid', color:'#FEF3E8', emoji:'🦁', url:'https://ugm.ac.id' },
+    { name:'Coursera Degrees', desc:'Gelar resmi S1/S2 dari universitas kelas dunia', tag:'paid', color:'#FDE8F3', emoji:'🎓', url:'https://coursera.org/degrees' },
+  ],
+};
+
+const roadmaps = [
+  { emoji:'💻', title:'Web Developer', meta:'Waktu: 6–12 bulan · Jenjang: Junior → Senior', skills:['HTML/CSS','JavaScript','React','Node.js','Git'], salary:'Rp 6–25 juta/bln', color:'#2D6BE4' },
+  { emoji:'🤖', title:'AI Engineer', meta:'Waktu: 12–18 bulan · Jenjang: Engineer → Lead', skills:['Python','Machine Learning','TensorFlow','MLOps','Math'], salary:'Rp 12–40 juta/bln', color:'#8B5CF6' },
+  { emoji:'🎨', title:'UI/UX Designer', meta:'Waktu: 4–8 bulan · Jenjang: Junior → Senior', skills:['Figma','Prototyping','Design System','Research','Motion'], salary:'Rp 6–20 juta/bln', color:'#E8521A' },
+  { emoji:'📊', title:'Data Analyst', meta:'Waktu: 6–10 bulan · Jenjang: Analyst → Lead', skills:['SQL','Python','Tableau','Statistics','Excel'], salary:'Rp 7–22 juta/bln', color:'#16A085' },
+  { emoji:'🔐', title:'Cyber Security', meta:'Waktu: 12–24 bulan · Jenjang: Analyst → Architect', skills:['Networking','Ethical Hacking','SIEM','Cryptography'], salary:'Rp 10–35 juta/bln', color:'#DC2626' },
+  { emoji:'📱', title:'Mobile Developer', meta:'Waktu: 8–14 bulan · Jenjang: Junior → Lead', skills:['Flutter','React Native','Swift','Kotlin','Firebase'], salary:'Rp 8–28 juta/bln', color:'#059669' },
+  { emoji:'📈', title:'Digital Marketing', meta:'Waktu: 3–6 bulan · Jenjang: Specialist → Manager', skills:['SEO','Google Ads','Meta Ads','Analytics','Content'], salary:'Rp 5–18 juta/bln', color:'#D97706' },
+  { emoji:'🏛️', title:'ASN / CPNS', meta:'Persiapan komprehensif ujian SKD & SKB', skills:['TWK','TIU','TKP','Materi Teknis','Try Out'], salary:'Gaji pokok + tunjangan', color:'#7C3AED' },
+];
+
+const jobs = [
+  { title:'Frontend Developer', company:'Tokopedia', logo:'🟢', location:'Jakarta · Remote', tags:['React','TypeScript','Senior'], salary:'Rp 12–18 juta', source:'via LinkedIn', isNew:true },
+  { title:'Data Scientist', company:'Gojek', logo:'🔵', location:'Jakarta · Hybrid', tags:['Python','ML','SQL'], salary:'Rp 15–25 juta', source:'via Glints', isNew:true },
+  { title:'UI/UX Designer', company:'Traveloka', logo:'🟡', location:'Bali · Remote', tags:['Figma','Senior','Product'], salary:'Rp 10–20 juta', source:'via Jobstreet', isNew:false },
+  { title:'Backend Engineer', company:'Sea Group', logo:'🔴', location:'Jakarta · On-site', tags:['Go','Microservices','Mid'], salary:'Rp 14–22 juta', source:'via LinkedIn', isNew:true },
+  { title:'Product Manager', company:'Bukalapak', logo:'🟠', location:'Jakarta · Hybrid', tags:['Agile','Analytics','Senior'], salary:'Rp 20–35 juta', source:'via Kalibrr', isNew:false },
+  { title:'DevOps Engineer', company:'Kredivo', logo:'🟣', location:'Jakarta · Remote', tags:['AWS','Docker','CI/CD'], salary:'Rp 16–28 juta', source:'via Indeed', isNew:true },
+];
+
+const communities = [
+  { icon:'💬', title:'Forum Tanya Jawab', desc:'Diskusikan pertanyaan teknis, karier, dan belajar bersama 50.000+ anggota aktif.', members:'52.400 anggota' },
+  { icon:'⭐', title:'Review Platform Belajar', desc:'Baca ulasan jujur dari pelajar nyata sebelum mendaftar kursus atau bootcamp.', members:'18.000 ulasan' },
+  { icon:'🤝', title:'Mentorship Connect', desc:'Temukan mentor dari perusahaan impianmu dan minta panduan langsung.', members:'1.200 mentor aktif' },
+  { icon:'📢', title:'Komunitas per Profesi', desc:'Bergabung ke komunitas Web Dev, Data, UI/UX, Marketing, dan banyak lagi.', members:'30+ komunitas' },
+  { icon:'🏆', title:'Challenge & Hackathon', desc:'Ikut kompetisi skill mingguan dan bangun portofolio nyata berhadiah menarik.', members:'Event tiap minggu' },
+  { icon:'📰', title:'Newsletter Karier', desc:'Laporan mingguan: loker baru, tren industri, tips karier dari praktisi.', members:'120.000 subscriber' },
+];
+
+const scholarships = [
+  { icon:'🌏', name:'Beasiswa LPDP 2025', detail:'Beasiswa penuh S2/S3 dalam & luar negeri dari Kementerian Keuangan RI', deadline:'Tutup: 30 Apr 2025' },
+  { icon:'🎓', name:'Bangkit Academy by Google', detail:'Program intensif 4 bulan cloud, ML, dan mobile dev — gratis & bersertifikat', deadline:'Tutup: 15 Mei 2025' },
+  { icon:'💡', name:'Kampus Merdeka Magang', detail:'Program magang 6 bulan di perusahaan terkemuka dengan uang saku', deadline:'Tutup: 20 Mei 2025' },
+  { icon:'🚀', name:'Digitalent Scholarship', detail:'Beasiswa pelatihan digital dari Kominfo untuk 600.000 talenta Indonesia', deadline:'Tutup: Rolling' },
+  { icon:'🌐', name:'Meta Spark Program', detail:'Beasiswa developer AR/VR dari Meta untuk kreator Indonesia', deadline:'Tutup: 1 Jun 2025' },
+];
+
+// ─── RENDER ─────────────────────────────────────────────
+function renderPlatforms(key = 'belajar') {
+  const grid = document.getElementById('platformGrid');
+  grid.innerHTML = platforms[key].map(p => `
+    <a href="${p.url}" target="_blank" class="platform-card">
+      <div class="platform-logo" style="background:${p.color}">${p.emoji}</div>
+      <div>
+        <div class="platform-name">${p.name}</div>
+        <div class="platform-desc">${p.desc}</div>
+      </div>
+      <span class="platform-tag tag-${p.tag}">${p.tag === 'free' ? 'Gratis' : p.tag === 'paid' ? 'Berbayar' : 'Freemium'}</span>
+    </a>
+  `).join('');
+}
+
+function renderRoadmap() {
+  document.getElementById('roadmapGrid').innerHTML = roadmaps.map(r => `
+    <div class="roadmap-card" style="--card-color:${r.color}" onclick="openRoadmap('${r.title}')">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${r.color};border-radius:14px 14px 0 0"></div>
+      <div class="roadmap-icon">${r.emoji}</div>
+      <div class="roadmap-title">${r.title}</div>
+      <div class="roadmap-meta">${r.meta}</div>
+      <div class="roadmap-skills">
+        ${r.skills.map(s => `<span class="skill-chip">${s}</span>`).join('')}
+      </div>
+      <div class="salary-badge">💰 ${r.salary}</div>
+    </div>
+  `).join('');
+}
+
+function renderJobs() {
+  document.getElementById('jobGrid').innerHTML = jobs.map(j => `
+    <div class="job-card">
+      <div class="job-top">
+        <div class="company-logo">${j.logo}</div>
+        ${j.isNew ? '<span class="job-new">● BARU</span>' : ''}
+      </div>
+      <div class="job-title">${j.title}</div>
+      <div class="job-company">${j.company} · ${j.location}</div>
+      <div class="job-tags">${j.tags.map(t => `<span class="job-tag">${t}</span>`).join('')}</div>
+      <div class="job-salary">${j.salary}</div>
+      <div class="job-source">${j.source}</div>
+    </div>
+  `).join('');
+}
+
+function renderCommunity() {
+  document.getElementById('communityGrid').innerHTML = communities.map(c => `
+    <div class="community-card">
+      <div class="community-icon">${c.icon}</div>
+      <div class="community-title">${c.title}</div>
+      <div class="community-desc">${c.desc}</div>
+      <div class="community-members">👥 ${c.members}</div>
+    </div>
+  `).join('');
+}
+
+function renderScholarships() {
+  document.getElementById('scholarshipList').innerHTML = scholarships.map(s => `
+    <div class="scholarship-item">
+      <div class="scholarship-icon">${s.icon}</div>
+      <div class="scholarship-content">
+        <div class="scholarship-name">${s.name}</div>
+        <div class="scholarship-detail">${s.detail}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div class="scholarship-deadline">${s.deadline}</div>
+        <a href="#" class="btn btn-primary" style="margin-top:8px;font-size:13px">Daftar →</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── INTERACTIONS ────────────────────────────────────────
+function switchTab(el, key) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderPlatforms(key);
+}
+
+function setFilter(el, val) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function doSearch() {
+  const q = document.getElementById('searchInput').value;
+  if (q.trim()) alert(`Mencari: "${q}"\n\nHalaman hasil pencarian akan terbuka.`);
+}
+
+function openRoadmap(title) {
+  window.location.href = `roadmap.html?r=${encodeURIComponent(title)}`;
+}
+
+function getAIRec() {
+  const input = document.getElementById('aiInput').value;
+  if (!input.trim()) return;
+  const output = document.getElementById('aiOutput');
+  output.innerHTML = '<div class="ai-output-title">Sedang menganalisis...</div><div style="opacity:0.5;font-size:14px;margin-top:12px">AI sedang menyusun rekomendasi personalisasi untukmu ✨</div>';
+  setTimeout(() => {
+    output.innerHTML = `
+      <div class="ai-output-title">Rekomendasi untuk Kamu</div>
+      <div class="ai-rec-item"><div class="ai-rec-num">1</div><div><div class="ai-rec-text">Mulai dengan kursus dasar yang relevan</div><div class="ai-rec-sub">Dicoding / Coursera · 4–8 minggu</div></div></div>
+      <div class="ai-rec-item"><div class="ai-rec-num">2</div><div><div class="ai-rec-text">Bangun 2–3 proyek portofolio nyata</div><div class="ai-rec-sub">GitHub + dokumentasi yang baik</div></div></div>
+      <div class="ai-rec-item"><div class="ai-rec-num">3</div><div><div class="ai-rec-text">Ikut bootcamp intensif untuk akselerasi</div><div class="ai-rec-sub">RevoU / Harisenin / Binar · 4 bulan</div></div></div>
+      <div class="ai-rec-item"><div class="ai-rec-num">4</div><div><div class="ai-rec-text">Apply ke loker entry-level di Glints & LinkedIn</div><div class="ai-rec-sub">200+ posisi relevan tersedia saat ini</div></div></div>
+    `;
+  }, 1500);
+}
+
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// ─── THEME ───────────────────────────────────────────────
+const themeBtn = document.getElementById('themeToggle');
+let isDark = localStorage.getItem('theme') === 'dark';
+function applyTheme() {
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  themeBtn.textContent = isDark ? '☀️' : '🌙';
+}
+applyTheme();
+themeBtn.addEventListener('click', () => {
+  isDark = !isDark;
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  applyTheme();
+});
+
+// ─── SCROLL REVEAL ───────────────────────────────────────
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// ─── INIT ────────────────────────────────────────────────
+renderPlatforms();
+renderRoadmap();
+renderJobs();
+renderCommunity();
+renderScholarships();
+</script>
+</body>
+</html>
